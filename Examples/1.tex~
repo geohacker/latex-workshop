@@ -1,0 +1,17 @@
+\documentclass{article}
+\title{My First \LaTeX\ Article}
+\author{Sajjad Anwar}
+\date{\today}
+\begin{document}
+\maketitle
+\tableofcontents
+\newpage
+\section{Section 1}
+Some text.
+\subsection{Subsection 1}
+Some text.
+\subsection*{Subsection 2}
+Some text.
+\section{Section 2}
+Some text.
+\end{document}

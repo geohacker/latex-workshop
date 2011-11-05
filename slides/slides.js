@@ -10,8 +10,8 @@
   URL: http://code.google.com/p/html5slides/
 */
 
-var PERMANENT_URL_PREFIX = '/home/geohacker/Projects/Latex workshop/slides/';
-
+// var PERMANENT_URL_PREFIX = '/home/geohacker/Projects/Latex-Workshop/slides/';
+var PERMANENT_URL_PREFIX = 'http://sajjad.in/content/slides/';
 var SLIDE_CLASSES = ['far-past', 'past', 'current', 'next', 'far-next'];
 
 var PM_TOUCH_SENSITIVITY = 15;
@@ -555,7 +555,7 @@ function addGeneralStyle() {
   var el = document.createElement('link');
   el.rel = 'stylesheet';
   el.type = 'text/css';
-  el.href = '/home/geohacker/Projects/Latex workshop/slides/styles.css';
+  el.href = PERMANENT_URL_PREFIX + 'styles.css';
   document.body.appendChild(el);
   
   var el = document.createElement('meta');

@@ -1,0 +1,735 @@
+\documentclass[a4paper,10pt]{iesreport}
+\usepackage[utf8x]{inputenc}
+%\usepackage{longtable}
+\usepackage{default}
+\usepackage{ucs}
+\usepackage{fontenc}
+\usepackage{graphicx}
+\usepackage{epsfig}
+\usepackage{appendix}
+%\usepackage{fancyhdr}
+%\setlength{\headheight}{15.2pt}
+%\fancyhead[L]{\sffamily\bfseries\thepage}
+%\renewcommand{\headrulewidth}{0.4pt}
+%\renewcommand{\footrulewidth}{0.4pt}
+
+% Title Page
+\title{\strong{\textbf{Automatic License Plate Recognition}} \linebreak Project Report}
+\author{Nijad Ashraf, Sajjad KM, Shehzad Abdulla, Saalim Jabir}
+
+\begin{document}
+\maketitle
+
+
+\begin{section}*{Acknowledgment}
+\paragraph*{}
+We express our sincere gratitude to Dr. Gylson Thomas, Head of Department, Computer Science Engineering, for his support and patience throughout the process and providing proper time slots for  the successful completion of the project. We are extremely happy to state that, the project has been a total team activity and we do not have words to thank our guide, Sajith N, Lecturer, Department of Computer Science. 
+\paragraph*{}
+The staff and our friends in and out of the Department have been whole heartedly supporting in facilitating the smooth development of the project.
+\end{section}
+
+\tableofcontents
+\listoftables
+\listoffigures
+
+\begin{abstract}
+Automatic License Plate Recognition system is a real time embedded system which automatically recognizes the license plate of vehicles. There are many applications of plate identification in pattern recognition and machine vision. These applications range from complex security systems to common areas and from parking admission
+to urban traffic control. Automatic license plate recognition (ALPR)
+has complex characteristics due to diverse effects such as fog, rain,
+shadows, irregular illumination conditions,partial occlusion, variable
+distances, cars’ velocity and plenty of others. These
+factors make plate recognition much more complex and difficult than
+the traditional pattern or optical character recognition (OCR) systems. The main objective of this project is to learn the basic image
+processing issues involved and gain experience in building a system
+to identify the license plate. This paper will bring out light on issues and implementation of the system.
+\end{abstract}
+\chapter[Introduction]{Introduction}
+\paragraph*{}
+The scientific world is deploying research in Intelligent transportation systems which have a significant impact on people’s lives. ITSs include intelligent
+ infrastructure systems and intelligent vehicle systems. Automatic License Plate Recognition (ALPR) is an image-processing
+ technology used to identify vehicles license plates. It is an embedded system which has numerous applications and challenges. Few of the  applications being unattended parking lots, security control of restricted areas, traffic law enforcement, and automatic toll collection. The entire inspiration behind implementing such a system to improve the efficiency and speed in these processes. Series of issues and challenges like effects of fog, rain, shadows, irregular illumination conditions,partial occlusion, variable
+ distances, cars’ velocity, scene’s angle on frame etc. makes it different from a traditional image processing system.
+\paragraph*{}
+Typically, an ALPR process consists of two main stages: 1) locating
+ license plates and 2) recognizing license characters. In the first stage,
+ license-plate candidates are determined based on the features of license
+ plates. License plates come with a wide range of features in shape, symmetry, size, colour,  texture etc. Many character recognition techniques will be introduced lately. More over, existing systems have been found to be extremely costly and implemented using proprietary software, which stands as a hurdle for opening up research and improvements in the existing system. This study will analyse the issues closer and try to implement a prototype system, which later can inspire more research. The activities are restricted to the Indian environment.
+
+\chapter{Scope}
+\paragraph*{The scope of this project has been listed as follows.}
+\begin{enumerate}
+ \item Understand the image processing techniques involved.
+ \item Realize the issues and challenges for implementing the
+ system.
+ \item Gain basic project management skills.
+ \item Familiarize several tools for developing an intuitive system.
+ \item Develop basic document writing and presentation skills.
+\end{enumerate}
+%----------------------------
+\chapter{Analysis}
+\section{Feasibility Study}
+\paragraph*{}
+Automatic License Plate Recognition (ALPR) is a real time
+ embedded mass surveillance system that captures the image
+ of vehicles and recognizes their license number.
+ ALPR technology tends to be region-specific, owing to plate
+ variation from place to place.
+ ALPR systems have been implemented in many countries
+ like Australia, Korea and few others. These countries enforced standards on the license plates in
+ terms of dimensions, borders, colour, font size and type.
+ Thus making the system easy to implement.
+\paragraph*{}
+It is notable that no good system have been introduced for Indian situation. The Indian situation calls for more challenges as there have been variations in 2 out of 5 samples collected.  Hence implementing a system, which could raise some sound regarding the enforcement of law on following the standard format.
+\paragraph*{}
+Existing systems are region-specific and costly as they have been implemented using proprietary tools and systems. These third party libraries have a strong copy right laws governing their use. This implementation have been totally planned to be carried out using free software. 
+The hardware requirements have been currently not taken into consideration. In other way, high resolution specialized cameras like IR cameras have been used. The proposed system will consider the images located at a repository and perform the rest of the operations. This confirms that the system is feasible to be implemented under the scope of an academic project.
+\newpage
+\section{Requirements}
+\paragraph*{}
+The software aspect of the system runs on standard embedded system hardware and can be linked to other applications or databases. It first uses a series of image manipulation techniques to detect, normalize and enhance the image of the number plate, and then optical character recognition (OCR) to extract the alphanumerics of the license plate.
+\paragraph*{}
+At the front end of any ANPR system is the imaging hardware which captures the image of the license plates. 
+Many countries now use license plates that are retroreflective. This returns the light back to the source and thus improves the contrast of the image. In some countries, the characters on the plate are not reflective, giving a high level of contrast with the reflective background in any lighting conditions. A camera that makes use of active infrared imaging (with a normal colour filter over the lens and an infrared illuminator next to it) benefits greatly from this as the infrared waves are reflected back from the plate. 
+\newpage
+\section{Issues}
+\paragraph*{}
+There are a number of possible difficulties that the software must be able to cope with. Ranging from poor image resolution to lack of coordination between countries or states.
+\\
+The issues can be broadly categorised into two:
+\begin{enumerate}
+ \item Standardization
+ \item Image Quality
+\end{enumerate}
+
+\paragraph*{Standardization}
+Even though there is a proper standard for licence plates in India, people are neither worried nor bothered about this, which stands as the greatest challenge faced. \\
+They vary in dimensions, fonts(type and size), colours and position of the plate. We may also find artworks which make it difficult for recognition. 
+\\
+\paragraph*{Image Quality}
+The image quality depends on the camera resolution and lighting. Undesirable blobs (like screws and holograms) may aslo creep in which increases compexity in the character recognition phase. 
+\\ \\
+\textbf{Refer Appendix 1 for an image walk through.}
+%----------------------------------------------------------------------------------------------------------------------------------
+\chapter{System}
+\section{Design}
+\paragraph*{}
+Automatic license plate recognition  plays an important role in numerous applications and a number of techniques have been proposed. We'll first take a quick overview of the system and the external conditions. In India, basically, there are two kinds of license-plates, black characters in white plate and black characters in yellow plate. The former for private vehicles and later for commercial, public service vehicles. Besides these two category, we could further more identify different styles for government and VIP vehicles. To keep the research in the scope of a mini project, we have chosen the discussed two categories.
+\paragraph*{}
+The license-plate is structured in such a way that the first two alphabets, together denote the state to which the vehicle is registered. (example: KL for Kerala, MH for Maharashtra).
+Next two digit numbers are sequential number of a disctrict \cite{WK}. (example: Calicut- 11, Malappuram- 10). The third part is a 4 digit number unique to each plate. A letter is prefixed when the 4 digit number runs out and then two letters and so on.
+\cite{LW}
+\paragraph*{}
+The proposed system consists of 6 phases, namely -  Capture, Preprocess, Localize, Connected Component Analysis, Segment, and Character Recognition. These phases have been distributed and handled through various modules for ease of implementation.
+ \begin{figure}[h]
+ \centering
+\includegraphics[bb=0 0 485 238,scale=0.6,keepaspectratio=true]{design.png}
+ % design.png: 640x314 pixel, 95dpi, 17.12x8.40 cm, bb=0 0 485 238
+ \caption{Six Phases}
+ \label{fig:phase}
+\end{figure}
+\newpage
+\subsubsection{Capture}
+\paragraph*{}
+The image of the vehicle is captured using a high resolution photographic camera. A better choice is an IR camera.
+The camera may be rolled and pitched with respect to the license plates. Character recognition is generally very sensitive to the skew. Using better camera with more pixels will increase the success ratio of license plate recognition. 
+\paragraph*{}
+To understand the variations in settings like exposure, frame aperture etc, we have choosen 3 cameras. 
+\begin{itemize}
+ \item Canon 1000D
+\begin{description}
+ \item[High resolution DSLR camera. HD images.]
+ \end{description}
+ \item Canon PowerShot IS 800
+\begin{description}
+ \item[8 MP digital camera with Image Stabilization.]
+ \end{description}
+ \item Nokia E72
+\begin{description}
+ \item[5 MP digital camera embedded on a mobile phone.]
+\end{description}
+\end{itemize}
+
+\subsubsection{Preprocess}
+\paragraph*{}
+Preprocessing is the set of methods and techniques applied on the image captured by the camera to make it easy to be handled by the system. Preprocessing is perhaps an important and common phase in any image-processing or computer vision systems.
+Preprocessing involves 2 methods:
+\begin{enumerate}
+ \item Resize 
+ \item Convert colour space.
+\end{enumerate}
+\paragraph*{Resize}
+The image size from the camera might be larger enough to make the system slow. The image is resized to a feasible aspect ratio. We have been doing more research for finding an optimal size for image. The perfect image size is 640x480 pixels.
+\paragraph*{Convert Colour Space}
+Images captured using IR or photographic cameras will be either in raw format or encoded into some multimedia standards like JPEG (Joint Photographic Expert Group), or PNG (Portable Network Graphics). Normally, these images will be in RGB mode or HSV mode. RGB mode effectively has 3 channels whereas HSV has 8 channels. Number of channels defines the amount colour information available on the image. The system under implementation does require only to distinguish two colours. Hence, the image has to be converted to gray-scale leaving two channels. 
+
+\subsubsection{Localize}
+\paragraph*{}
+Rear or front part of the vehicle is captured into an  image. This image will certainly contain most other parts of the vehicle and the environment, which are of very low requirement to the present system. The license-plate is the only portion in the image which we are interested in and need to be localized. \\
+There are two purposes for the binarization step: 
+\begin{enumerate}
+ \item Highlighting characters. 
+ \item Suppressing background.
+\end{enumerate}
+
+However, both desired (e.g., characters) and undesired (e.g.,
+noise and borders of vehicle plates) image areas often appear
+ during binarization.
+\paragraph*{}
+A number of algorithms are suggested for
+ number plate localization such as: multiple
+ interlacing algorithm, Fourier domain filtering,
+  and color image processing. These algorithms
+ however do not satisfactorily work for Indian
+ number plates since they assume features like border for the plate, color of plate and colour of
+ characters to be present on the number plate etc. 
+\paragraph*{}
+Threshold is an image processing operation by which the
+ pixels of the image are truncated to two values depending
+ upon the value of threshold.
+ Threshold requires pre-image analysis for identifying the
+ suitable threshold value.
+ \\
+Many statistical and physical modelling algorithms have been
+developed for the same purpose. Normal thresholding
+techniques are inefficient due to several reasons. Hence,
+adaptive thresholding is used.
+\paragraph*{}
+The technique determines a local optimal threshold value for each image pixel
+ so as to avoid the problem originating from nonuniform illumination. Although variable thresholding cannot completely compensate for the information loss mentioned above, it at least
+preserves information that may be lost when using a constant binarization method. 
+
+\subsubsection{Connected Component Analysis}
+\paragraph*{}
+In order to eliminate undesired image areas, a connected component algorithm is first applied to the binarized plate candidate.
+ Connected component analysis is performed to identify the characters in the image. Basic idea is to traverse through the image and find the connected pixels. Label them and extract. 
+\paragraph*{}
+cvBlobsLib is a library under OpenCV which extract 8-connected components in binary or grayscale images. 
+\paragraph*{}
+
+\subsubsection{Segmentation}
+\paragraph*{}
+Segmentation is the process of cropping out the labelled blobs. These blobs are expected to be the required portion of the license number. A special algorithm called \textbf{Image Scissoring} is introduced here. In this algorithm, the number plate is vertically scanned
+ and scissored at the row on which there is no white
+ pixel (i.e., a blank row) and the scissored area is
+ copied into new matrix. This scanning procedure
+ proceeds further in search of a blank row and thus
+ different scissored areas are obtained in different
+  matrices. Indian number plates can have either
+ single or double rows. Hence, maximum two
+ matrices must co-exist.
+
+\subsubsection{Character Recognition}
+\paragraph*{}
+Optical Character Recognition, usually abbreviated to OCR, is the mechanical or electronic translation of scanned images of handwritten, typewritten or printed text into machine-encoded text. It is widely used to convert books and documents into electronic files, to computerize a record-keeping system in an office, or to publish the text on a website. OCR makes it possible to edit the text, search for a word or phrase, store it more compactly, display or print a copy free of scanning artifacts, and apply techniques such as machine translation, text-to-speech and text mining to it. OCR is a field of research in pattern recognition, artificial intelligence and computer vision.
+\paragraph*{}
+The blobs are send to an Optical Character Recognition
+ engine for returning the ASCII.
+Tesseract is a leading OCR library developed in the HP Labs,
+ later acquired and highly modified by Google.
+ Google released this into the open source community.
+%-----------------------------------------------------------------------
+\newpage
+\subsection{Data Flow Diagram}
+\paragraph*{}
+A Data Flow Diagram is perhaps the best method capture the flow of data through a sophisticated system, thus making the systems
+easier to understand. DFD included each of the process involved to the data being arrived and the data that leaves that phase.
+\begin{figure}[h]
+ \centering
+ \includegraphics[bb=0 0 888 561,scale = 0.5,keepaspectratio=true]{dfdfinal.png}
+ % dfdfinal.png: 888x561 pixel, 72dpi, 31.33x19.79 cm, bb=0 0 888 561
+ \caption{Data Flow Diagram}
+ \label{fig:dfd}
+\end{figure}
+\newpage
+\subsection{Modules}
+\paragraph*{}
+The six phases are distributed into different modules, for easy implementation and optimization. 
+\begin{enumerate}
+ \item Preprocessing
+ \item Localization
+ \item Connected Component Analyis
+ \item Segmentation
+ \item Classification
+ \item Character Recognition
+\end{enumerate}
+\paragraph*{}
+\paragraph*{}
+The modules and their corresponding inputs and outputs have been depicted in the Data Flow Diagram (Fig 4.2)
+\subsection{Algorithms}
+\paragraph*{}
+Several algorithms have been implemented in the different modules to achieve the goals. 
+\paragraph*{The  following are the notable ones:}
+\begin{itemize}
+ \item Otsu algorithm for adaptive threshold.
+ \item A linear-time component labeling using contour tracing technique.
+ \item Image Scissoring.
+ \item Blob Classification.
+\end{itemize}
+\subsubsection*{Otsu algorithm for adaptive threshold}
+\paragraph*{}
+Otsu's method is used to automatically perform histogram shape-based image thresholding, or, the reduction of a graylevel image to a binary image.
+The algorithm assumes that the image to be thresholded contains two classes of pixels (e.g. foreground and background) then calculates the optimum threshold separating those two classes so that their 
+combined spread (intra-class variance) is minimal. Otsu's method is named after Nobuyuki Otsu. \cite{OT}
+
+
+\subsubsection*{A linear-time component labeling using contour tracing technique}
+\paragraph*{}
+This a new linear-time algorithm that simultaneously labels connected components and their contours in binary images. The main step of this algorithm is to use a contour tracing technique to detect the external contour and possible internal contours of each component, 
+and also to identify and label the interior area of each component. \cite{LT}
+\subsubsection*{Image Scissoring}
+\paragraph*{}
+In this algorithm, the number plate is vertically scanned and scissored at the row on which there is no white pixel (i.e., a blank row) and the scissored area is copied into new matrix. This scanning procedure proceeds further in search of a blank row and thus different scissored areas are obtained in different  matrices. 
+\cite{IS}
+\subsubsection*{Blob Classification}
+\paragraph*{}
+Even after binarization of the image, there would be undesirable blobs in the labelled components. These should be removed skillfully.
+The Blob Classification phase is, in fact, a set of algorithms, designed and tailored for the Indian situation. 
+\paragraph*{}
+The aspect ratios of connected components are then calculated.
+The components whose aspect ratios are outside a prescribed
+range are deleted. \\
+Then an alignment of the remaining components is derived by detecting the frame of the license plate. The components disagreeing with the
+alignment are removed.\\ \\
+\newpage
+We shall capture the algorithms by means of various flow charts.\\ \\ \\ \\ \\ \\ \\ 
+\begin{figure}[h]
+ \centering
+ \includegraphics[bb=0 0 250 534,scale=0.6,keepaspectratio=true]{./flowchart1.png}
+ % flow1.png: 250x534 pixel, 72dpi, 8.82x18.84 cm, bb=0 0 250 534
+ \caption{Scissoring}
+ \label{fig:flow1}
+\end{figure}
+\newpage
+\begin{figure}[h]
+ \centering
+ \includegraphics[bb=0 0 332 604,scale=0.7,keepaspectratio=true]{./flowchart3.png}
+ % flow2.png: 332x604 pixel, 72dpi, 11.71x21.31 cm, bb=0 0 332 604
+ \caption{Classification Phase 1}
+ \label{fig:flow2}
+\end{figure}
+\newpage
+\begin{figure}[h]
+ \centering
+ \includegraphics[bb=0 0 332 604,scale=0.7,keepaspectratio=true]{./flowchart2.png}
+ % flow4.png: 332x604 pixel, 72dpi, 11.71x21.31 cm, bb=0 0 332 604
+ \caption{Classification Phase 2}
+ \label{fig:flow3}
+\end{figure}
+\newpage
+\section{Tools}
+\paragraph*{}
+The entire ALPR system has been totally planned and implemented using free software. 
+“Free software” is a matter of liberty, not price. Free software is a matter of the users' freedom to run, copy, distribute, study, change and improve the software. \\
+
+At the highest level, the tools used could be 
+categorized as below.
+\begin{itemize}
+ \item Operating System
+ \item Language
+ \item Libraries
+ \item Project Management
+ \item Document Preparation
+\end{itemize}
+\subsection{Operating System}
+\paragraph*{}
+The GNU \cite{GN} operating system is a complete free software system, upward-compatible with Unix. GNU stands for “GNU's Not Unix”. Richard Stallman made the Initial Announcement of the GNU Project in September 1983. A longer version called the GNU Manifesto was published in March 1985. It has been translated into several other languages.
+\textbf{Ubuntu} is leading flavor of GNU/Linux operating system developed and supported by Canonical Inc \cite{UB}.
+\subsection{Language}
+\paragraph*{Python}
+Python is a remarkably powerful dynamic,object-oriented programming language that is used in a wide variety of application domains. It offers strong support for integration with other languages and tools, comes with extensive standard libraries. Python is often compared to Tcl, Perl, Ruby, Scheme or Java.
+Some of its key distinguishing features include:
+\begin{itemize}
+ \item Very clear, readable syntax
+\item Strong introspection capabilities
+ \item Intuitive object orientation
+\item Natural expression of procedural code
+\item Full modularity, supporting hierarchical packages
+\item Exception-based error handling
+\item Very high level dynamic data types
+\item Extensive standard libraries and third party modules for virtually every task
+\item Extensions and modules easily written in C, C++ (or Java for Jython, or .NET languages for IronPython)
+\item Embeddable within applications as a scripting interface
+\end{itemize}
+\paragraph*{}
+The Python implementation is under an open source license that makes it freely usable and distributable, even for commercial use. The Python license is administered by the Python Software Foundation.
+Python is available for all major operating systems: Windows, Linux/Unix, OS/2, Mac, Amiga, among others. There are even versions that run on .NET, the Java virtual machine, and Nokia Series 60 cell phones. You'll be pleased to know that the same source code will run unchanged across all implementations.
+\subsection{Libraries}
+\paragraph*{}
+Many open-source third party libraries have been used to implement the system.
+\begin{itemize}
+ \item Open Computer Vision Library (OpenCV)
+ \item CvBlobsLib
+ \item Tesseract
+ \item Qt Designer
+ \item PyQt
+\end{itemize}
+\paragraph*{Open Computer Vision Library}
+OpenCV is a library of programming functions for real time computer vision originally developed by Intel.
+It is free for use under the open source BSD license. The library is cross-platform. It focuses mainly on real-time image processing. If the library finds Intel's Integrated Performance Primitives on the system, it will use these commercial optimized routines to accelerate itself.
+The library has >500 optimized algorithms. It is used around the world, has >2M downloads and >40K people in the user group. Uses range from interactive art, to mine inspection, stitching maps on the web on through advanced robotics.
+\paragraph*{}
+The library is mainly written in C, which makes it portable to some specific platforms such as Digital signal processor. Wrappers for languages such as C#, Python, Ruby and Java (using JavaCV) have been developed to encourage adoption by a wider audience.
+\\
+\paragraph*{cvBlobsLib}
+is a library to perform binary images connected component labelling. It also provides functions to manipulate, filter and extract results from the extracted blobs.
+\\
+The library provides two basic functionalities:
+\begin{itemize}
+ \item Extract 8-connected components in binary or grayscale images. These connected components are referred as blobs.
+ \item Filter the obtained blobs to get the interest objects in the image. This is performed using the Filter method from CBlobResult.
+\end{itemize}
+The library is thread-safe if different objects per thread are used.
+\paragraph*{Tesseract OCR}
+Tesseract is an open-source OCR engine that was
+developed at HP between 1984 and 1994. Like a supernova, it appeared from nowhere for the 1995 UNLV
+Annual Test OCR Accuracy \cite{AT}. HP released Tesseract for open source.  \\
+It is now available at \texttt{http://code.google.com/p/tesseract-ocr}. \\
+The most recent change is that Tesseract can now recognize 6 languages, is fully UTF8 capable, and is fully trainable.
+\paragraph*{Qt Designer}
+Qt is an extensive GUI library developed at Trolltech Inc. Qt has become the most demanded  Qt application development framework , which is a free software, confirming that it is the best library for building GUI applications. Qt package comes with an efficient, easy to master, designer tool, which can be used to create forms and windows and manage basic actions. 
+\\
+Qt Designer is Qt's tool for designing and building graphical user interfaces (GUIs) from Qt components. You can compose and customize your widgets or dialogs in a what-you-see-is-what-you-get (WYSIWYG) manner, and test them using different styles and resolutions.
+\paragraph*{PyQt}
+PyQt is a tool developed by Mark Summerfield , to create python scripts from the interfaces designed using Qt Designer. Earlier GUI programming tools, crashed and looked cluttered, ruining the entire point of using such an interface. PyQt takes advantage of the simplicity of Python and the standard library for networking and threading. 
+\\
+Like Qt, PyQt is free software. PyQt is implemented as a Python plug-in.
+\subsection{Project Management}
+\paragraph*{Subversion}
+SVN (Subversion) is a tool used by many software developers to manage changes within their source code tree. SVN provides the means to store not only the current version of a piece of source code, but a record of all changes (and who made those changes) that have occurred to that source code. Use of SVN is particularly common on projects with multiple developers, since SVN ensures changes made by one developer are not accidentally removed when another developer posts their changes to the source tree.
+\\
+In order to access a Subversion repository, you must install a special piece of software called a Subversion client. Subversion clients are available for most any operating system.
+\subsection{Document Preparation}
+\paragraph*{\LaTeX}
+is a high-quality typesetting system; it includes features designed for the production of technical and scientific documentation. \LaTeX   is the de facto standard for the communication and publication of scientific documents. \LaTeX is available as free software.
+\LaTeX    is not a word processor! Instead, \LaTeX encourages authors not to worry too much about the appearance of their documents but to concentrate on getting the right content.
+\LaTeX is based on the idea that it is better to leave document design to document designers, and to let authors get on with writing documents.
+
+\paragraph*{Dia}
+Dia is a gtk+ based diagram creation program released under the GPL license.
+\\
+Dia is inspired by the commercial Windows program 'Visio', though more geared towards informal diagrams for casual use. It can be used to draw many different kinds of diagrams. It currently has special objects to help draw entity relationship diagrams, UML diagrams, flowcharts, network diagrams, and many other diagrams. It is also possible to add support for new shapes by writing simple XML files, using a subset of SVG to draw the shape.
+\\
+The block diagrams, flow charts and Data Flow Diagram has been created using Dia.
+
+\newpage
+
+\label{imple}
+\section{Implementation}
+\subsection{Module Test Plan}
+%\label{imple:moduletp}
+\subsubsection*{Preprocess}
+\begin{table}
+\caption{Preprocess module test plan}
+% title of Table
+%\centering
+% used for centering table
+\begin{tabular}{c|p{3cm}|p{5cm}|p{3.5cm}}
+% centered columns (4 columns)
+\hline
+%inserts double horizontal lines
+\textbf{Test ID} & \textbf{Initial Condition} & \textbf{Test Description} & \textbf{Expected Result} \\ [0.3ex]
+% inserts table
+%heading
+\hline
+% inserts single horizontal line
+1 & Threshold Value = 0 & Transform the image to Gray scale. Normal thresholding to binary. & Binary image with less noise\\
+% inserting body of the table
+\hline
+2 & Threshold Value = 128 & Transform the image to Gray scale. Binary image via Normal thresholding & Binary image with less noise \\
+\hline
+3 & Threshold Value = 128 & Transform the image to Gray scale. Binary image via Adaptive thresholding & Binary image with less noise\\
+\\
+\hline
+% [1ex] adds vertical space
+%inserts single line
+\end{tabular}
+\label{table:nonlin}
+% is used to refer this table in the text
+\end{table}
+%\newpage
+\subsubsection*{Blob Identification}
+\begin{table}
+\caption{Blob identification module test plan}
+% title of Table
+%\centering
+% used for centering table
+\begin{tabular}{c|p{3.2cm}|p{5cm}|p{3.5cm}}
+% centered columns (4 columns)
+\hline
+%inserts double horizontal lines
+\textbf{Test ID} & \textbf{Initial Condition} & \textbf{Test Description} & \textbf{Expected Result} \\ [0.3ex]
+% inserts table
+%heading
+\hline
+% inserts single horizontal line
+1 & Blob filter = (0,9000) pixels & Extract blobs which belong to the pixel range & Blobs includes only license number\\
+% inserting body of the table
+\hline
+2 & Blob filter = (100,9000) pixels & Extract blobs which belong to the pixel range & Blobs includes only license number\\
+\hline
+3 & Blob filter = (1000,6000) pixels & Extract blobs which belong to the pixel range & Blobs includes only license number\\
+\hline
+4 & Blob filter = (500,2500) pixels & Extract blobs which belong to the pixel range & Blobs includes only license number\\
+\hline
+5 & Blob filter = (325,2000) pixels & Extract blobs which belong to the pixel range & Blobs includes only license number\\% [1ex] \\
+\hline
+% [1ex] adds vertical space
+%inserts single line
+\end{tabular}
+\label{table:nonlin}
+% is used to refer this table in the text
+\end{table}
+%-----------------
+\newpage
+\subsubsection*{Classification}
+\begin{table}
+\caption{Classification module test plan}
+% title of Table
+%\centering
+% used for centering table
+\begin{tabular}{p{3.2cm}|p{3.2cm}|p{5cm}|p{3.5cm}}
+% centered columns (4 columns)
+\hline
+%inserts double horizontal lines
+\textbf{Test ID} & \textbf{Initial Condition} & \textbf{Test Description} & \textbf{Expected Result} \\ [0.3ex]
+% inserts table
+%heading
+\hline
+% inserts single horizontal line
+1 & Compares mode of size of blobs with all other blobs & Moves unwanted blobs to trash &  Only license numbers are selected
+\\ \hline
+2 & Compares mode of size of blobs and pixel values with all other blobs & Moves unwanted blobs to trash &  Only license numbers are selected \\
+% inserting body of the table
+\hline
+% [1ex] adds vertical space
+%inserts single line
+\end{tabular}
+\label{table:nonlin}
+% is used to refer this table in the text
+\end{table}
+%------------------------
+\subsubsection*{Character Recognition}
+\begin{table}
+\caption{Character Recognition module test plan}
+% title of Table
+%\centering
+% used for centering table
+\begin{tabular}{p{3.2cm}|p{3.2cm}|p{5cm}|p{3.5cm}}
+% centered columns (4 columns)
+\hline
+%inserts double horizontal lines
+\textbf{Test ID} & \textbf{Initial Condition} & \textbf{Test Description} & \textbf{Expected Result} \\ [0.3ex]
+% inserts table
+%heading
+\hline
+% inserts single horizontal line
+1 & Use gOCR library & Recognises the characters from the image &  Recognises the license number
+\\ \hline
+2 & Use Tesseract library & Recognises the characters from the image &  Recognises the license number \\
+% inserting body of the table
+\hline
+% [1ex] adds vertical space
+%inserts single line
+\end{tabular}
+\label{table:nonlin}
+% is used to refer this table in the text
+\end{table}
+\newpage
+%\subsection*{System Test Plan}
+\chapter{Testing}
+\section{Unit Testing}
+\paragraph*{}
+The unit testing has been carried out based on the test plan defined in section 4.3.1
+\subsubsection*{Preprocess}
+\begin{table}
+\caption{Preprocess module test results}
+% title of Table
+%\centering
+% used for centering table
+\begin{tabular}{c|p{3cm}|p{3.5cm}|p{3.2cm}|p{2.5cm}}
+% centered columns (4 columns)
+\hline
+%inserts double horizontal lines
+\textbf{Test ID} & \textbf{Initial Condition} & \textbf{Test Description} & \textbf{Expected Result}  & \textbf{Actual Result} \\ [0.3ex]
+% inserts table
+%heading
+\hline
+% inserts single horizontal line
+1 & Threshold Value = 0 & Transform the image to Gray scale. Normal thresholding to binary. & Binary image with less noise & Fail\\
+% inserting body of the table
+\hline
+2 & Threshold Value = 128 & Transform the image to Gray scale. Binary image via Normal thresholding & Binary image with less noise & Fail \\
+\hline
+3 & Threshold Value = 128 & Transform the image to Gray scale. Binary image via Adaptive thresholding & Binary image with less noise & Pass\\
+\\
+\hline
+% [1ex] adds vertical space
+%inserts single line
+\end{tabular}
+\label{table:nonlin}
+% is used to refer this table in the text
+\end{table}
+\subsubsection*{Blob Identification}
+\begin{table}
+\caption{Blob identification module test results}
+% title of Table
+%\centering
+% used for centering table
+\begin{tabular}{c|p{3cm}|p{3.5cm}|p{3.2cm}|p{2.5cm}}
+% centered columns (4 columns)
+\hline
+%inserts double horizontal lines
+\textbf{Test ID} & \textbf{Initial Condition} & \textbf{Test Description} & \textbf{Expected Result}  & \textbf{Actual Result}\\ [0.3ex]
+% inserts table
+%heading
+\hline
+% inserts single horizontal line
+1 & Blob filter = (0,9000) pixels & Extract blobs which belong to the pixel range & Blobs includes only license number & Fail\\
+% inserting body of the table
+\hline
+2 & Blob filter = (100,9000) pixels & Extract blobs which belong to the pixel range & Blobs includes only license number & Fail \\
+\hline
+3 & Blob filter = (1000,6000) pixels & Extract blobs which belong to the pixel range & Blobs includes only license number  & Fail\\
+\hline
+4 & Blob filter = (500,2500) pixels & Extract blobs which belong to the pixel range & Blobs includes only license number  & Partial\\
+\hline
+5 & Blob filter = (325,2000) pixels & Extract blobs which belong to the pixel range & Blobs includes only license number & Pass\\% [1ex] \\
+\hline
+% [1ex] adds vertical space
+%inserts single line
+\end{tabular}
+\label{table:nonlin}
+% is used to refer this table in the text
+\end{table}
+%----------------
+\newpage
+\subsubsection*{Classification}
+\begin{table}
+\caption{Classification module test results}
+% title of Table
+%\centering
+% used for centering table
+\begin{tabular}{c|p{3cm}|p{3.5cm}|p{3.2cm}|p{2.5cm}}
+% centered columns (4 columns)
+\hline
+%inserts double horizontal lines
+\textbf{Test ID} & \textbf{Initial Condition} & \textbf{Test Description} & \textbf{Expected Result}  & \textbf{Actual Result}\\ [0.3ex]
+% inserts table
+%heading
+\hline
+% inserts single horizontal line
+1 & Compares mode of size of blobs with all other blobs & Moves unwanted blobs to trash &  Only license numbers are selected & Fail
+\\ \hline
+2 & Compares mode of size of blobs and pixel values with all other blobs & Moves unwanted blobs to trash &  Only license numbers are selected  & Pass\\
+% inserting body of the table
+\hline
+% [1ex] adds vertical space
+%inserts single line
+\end{tabular}
+\label{table:nonlin}
+% is used to refer this table in the text
+\end{table}
+%------------------------
+\subsubsection*{Character Recognition}
+\begin{table}
+\caption{Character Recognition module test results}
+% title of Table
+%\centering
+% used for centering table
+\begin{tabular}{c|p{3cm}|p{3.5cm}|p{3.2cm}|p{2.5cm}}
+% centered columns (4 columns)
+\hline
+%inserts double horizontal lines
+\textbf{Test ID} & \textbf{Initial Condition} & \textbf{Test Description} & \textbf{Expected Result}  & \textbf{Actual Result}\\ [0.3ex]
+% inserts table
+%heading
+\hline
+% inserts single horizontal line
+1 & Use GNU OCR library & Recognises the characters from the image &  Recognises the license number & Fail
+\\ \hline
+2 & Use Tesseract library & Recognises the characters from the image &  Recognises the license number & Pass\\
+% inserting body of the table
+\hline
+% [1ex] adds vertical space
+%inserts single line
+\end{tabular}
+\label{table:nonlin}
+% is used to refer this table in the text
+\end{table}
+%\section{System Testing}
+\newpage
+\section{Statistics and Results}
+The system has been put to test for various measurements of performance and accuracy.
+\subsection*{Accuracy Analysis} \\
+\begin{table}
+\begin{tabular}{p{3.5cm}|c|c|c|p{2.5cm}}
+% centered columns (4 columns)
+\hline
+%inserts double horizontal lines
+\textbf{Operation} & \textbf{Sample} & \textbf{Success} & \textbf{Fail}  & \textbf{Success Ratio} [0.3ex] \\
+\hline
+% inserts single horizontal line
+License plate localization & 100 & 92 &  8 & 92\% \\
+\hline
+Character Separation & 92 & 88 &  4 & 95.7\% \\
+\hline
+Character Recognition & 88 & 83 &  5 & 94.3\% \\
+\hline
+% inserting body of the table
+% [1ex] adds vertical space
+%inserts single line
+\end{tabular}
+\label{table:nonlin}
+% is used to refer this table in the text
+\end{table}
+
+\newpage
+\subsection*{Performance Analysis} 
+  The research shows that, the image size is the key factor determining the performance of the entire ALPR system.
+The following graph explains the performance relationship of the system.
+\begin{figure}
+\begin{center}
+ \includegraphics[bb=0 0 600 550,scale=0.7,keepaspectratio=true]{./perf.png}
+ % dfdfinal.png: 888x561 pixel, 72dpi, 31.33x19.79 cm, bb=0 0 888 561
+ \caption{Performance}
+\end{center}
+ \label{fig:perf}
+\end{figure}
+
+\chapter{Conclusion}
+\paragraph*{}
+The system works satisfactorily for wide variations
+in illumination conditions and different types of
+number plates commonly found in India. It is
+definitely a better alternative to the existing manual
+systems in India.
+\paragraph*{}
+Currently there are certain restrictions on
+parameters like speed of the vehicle, script on the
+number plate, skew in the image which can be aptly
+removed by enhancing the algorithms further.
+%---------------------------------------
+\newpage
+\addcontentsline{toc}{chapter}{\numberline{}Appendices}
+\newpage
+%\appendix
+\chapter*{Appendices}
+\section*{Issues}
+\begin{center}
+ \includegraphics[bb=0 0 794 596,scale=0.5,keepaspectratio=true]{./issues.png}
+ % issues.png: 1058x794 pixel, 96dpi, 28.00x21.01 cm, bb=0 0 794 596
+\end{center}
+\section*{Process of ALPR}
+\begin{center}
+ \includegraphics[bb=0 0 794 596,scale=0.5,keepaspectratio=true]{./process.png}
+ % process.png: 1058x794 pixel, 96dpi, 28.00x21.01 cm, bb=0 0 794 596
+\end{center}
+
+
+%----------bibliograpgy------------------------------------
+\newpage
+\addcontentsline{toc}{chapter}{\numberline{}Bibliography}
+\include{biblio}
+
+
+\end{document}          

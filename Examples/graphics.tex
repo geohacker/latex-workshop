@@ -1,0 +1,42 @@
+\documentclass{article}
+\usepackage{default}
+% \usepackage{graphicx}
+\usepackage{graphics}
+\title{My First \LaTeX\ Article}
+\author{Sajjad Anwar}
+\date{\today}
+\begin{document}
+\maketitle
+\newpage
+\tableofcontents
+\newpage
+\section{Section 1}
+Some text.
+\subsection{Subsection 1}
+Some text.\cite{dennis}
+\subsection*{Subsection 2}
+\includegraphics{logo.png}
+\section{Section 2}
+
+\begin{itemize}
+ \item Automated traffic surveillance and tracking system.
+ \item Automated high-way/parking toll collection systems.
+ \item Automation of petrol stations.
+ \item Journey time monitoring.
+\end{itemize}
+
+
+\begin{enumerate}
+ \item Automated traffic surveillance and tracking system.
+ \item Automated high-way/parking toll collection systems.
+ \item Automation of petrol stations.
+ \item Journey time monitoring.
+\end{enumerate}
+
+\newpage
+\begin{thebibliography}{Dennis, 1993}
+\bibitem[Dennis]{dennis}Father of C programming language,
+\emph{Bell Labs}
+\end{thebibliography}
+
+\end{document}

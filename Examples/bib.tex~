@@ -10,15 +10,14 @@
 \section{Section 1}
 Some text.
 \subsection{Subsection 1}
-Some text.
-\cite{dennis}
+Some text.\cite{dennis}
 \subsection*{Subsection 2}
 Some text.
 \section{Section 2}
 Some text.
 \newpage
 \begin{thebibliography}{Dennis, 1993}
-\bibitem[Dennis]{dennis}Father of C programming language,
+\bibitem[Dennis Ritchie]{dennis}Father of C programming language,
 \emph{Bell Labs}
 \end{thebibliography}
 
